@@ -4,12 +4,15 @@ import com.sparta.blog.dto.SignupRequestDto;
 import com.sparta.blog.model.User;
 import com.sparta.blog.model.UserRoleEnum;
 import com.sparta.blog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
     private final PasswordEncoder passwordEncoder;

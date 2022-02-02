@@ -40,6 +40,10 @@ public class Board extends Timestamped {
     @Column(nullable = false, columnDefinition = "varchar(100)")
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
 //    @Column(name="created_at")
 //    private LocalDateTime createdAt;
 

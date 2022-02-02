@@ -1,4 +1,6 @@
 spring:
+  thymeleaf:
+    cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/sparta?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -9,9 +11,10 @@ spring:
     #password: 1q2w3e4r
 
 
+
   jpa:
     hibernate:
-      ddl-auto: create  #none,update,validate
+      ddl-auto: update  #none,update,validate
     properties:
       hibernate:
         format_sql: true
