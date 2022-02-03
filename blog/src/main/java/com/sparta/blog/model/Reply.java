@@ -1,37 +1,45 @@
 package com.sparta.blog.model;
 
-import com.sparta.blog.dto.ReplyDTO;
-import com.sparta.blog.model.Timestamped;
-import com.sparta.blog.model.Board;
-import com.sparta.blog.model.User;
-import lombok.*;
 
+import com.sparta.blog.model.Timestamped;
+import com.sparta.blog.dto.ReplyDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 
-@Builder
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Entity
 public class Reply extends Timestamped {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 200)
-    private String content;
+    @Column(nullable = false)
+    private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "boardId")
-    private Board board;
+    @Column(nullable = false)
+    private String reply;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @Column(nullable = false)
+    private long boardId;
 
+    @Column(nullable = false)
+    private Long userId;
 
-    public void update(ReplyDTO replyDTO) {
-        this.content = replyDTO.getContent();
+    public Reply(ReplyDto replyDto, Long userId, String username, Long boardId) {
+        this.userId = userId;
+        this.reply = replyDto.getReply();
+        this.boardId = boardId;
+        this.username = username;
     }
+
+    public void updateReply(ReplyDto requestDto) {
+        this.reply = requestDto.getReply();
+    }
+
 }
+

@@ -1,7 +1,5 @@
 package com.sparta.blog.dto;
 
-import com.sparta.blog.model.Board;
-import com.sparta.blog.model.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ReplyDTO {
+public class ReplyDto {
 
-    private String content;
+    private String reply;
+    private Long boardId;
 
 
 }

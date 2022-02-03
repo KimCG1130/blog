@@ -14,22 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
-        private Integer id;
+        private Long id;
         private String title;
         private String username;
         private String content;
-        private LocalDateTime createdAt;
 
-        public Board toEntity() {
 
-                return Board.builder()
-                        .id(this.id)
-                        .content(this.content)
-                        .username(this.username)
-                        .title(this.title)
-                        .createdAt(this.createdAt)
-                        .build();
-        }
+
 
 }
 

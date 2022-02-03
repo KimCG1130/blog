@@ -3,6 +3,8 @@ package com.sparta.blog.model;
 
 import com.sparta.blog.dto.BoardDto;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 //
 //연관관계 매핑 : @ManyToOne, @JoinColumn
 
-
+@Builder
 @Entity//@Entity가 붙은 클래스는 JPA가 관리하는 것으로, 엔티티라고 불림, 테이블과의 매핑
 @AllArgsConstructor(access = AccessLevel.PROTECTED)//모든 필드 값을 파라미터로 받는 생성자를 만듦,lombok
 @NoArgsConstructor(access = AccessLevel.PROTECTED)//파라미터가 없는 기본 생성자를 생성,lombok
@@ -29,44 +31,63 @@ public class Board extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name="board_id")//필드와 컬럼매핑, 즉 컬럼상 board_id와 id라는 변수가 짝을 이룬다
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, columnDefinition = "varchar(20)")
     private String title;
 
-    @Column(name="user_name", nullable = false, columnDefinition = "varchar(12)")
+    @Column(name="user_name", nullable = false)
     private String username;
 
     @Column(nullable = false, columnDefinition = "varchar(100)")
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
 
-//    @Column(name="created_at")
-//    private LocalDateTime createdAt;
+    @Column(name = "userId")
+    private Long userId;
 
-    @Builder//얘도 롬복,빌드 패턴을 사용하여 객체를 생성할 수 있으며 객체 생성 후 setter를 통한 접근을 제한 할수 있어서 불변형 객체를 만들 수 있다.>
-    // 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 나타냄>객체들마다 들어가야할 인자가 각각 다를 때 유연하게 사용
-    //public Board(String title, String username, String content){
-    public Board(String title, String content, String username, LocalDateTime createdAt, Integer id){
-  //      this.id = id;
-        this.title = title;
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name="modified_at")
+    private LocalDateTime modifiedAt;
+
+    public Board(BoardDto requestDto, Long userId, String username) {
+        this.userId = userId;
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
         this.username = username;
-        this.content = content;
-  //      this.createdAt = createdAt;
+
+
     }
 
-    public BoardDto toDto() { //보드를 디티오로 바꿔서 반환해주는 메서드(자세한건 서비스에 기술되어있음)*
-        return BoardDto.builder()
-                .id(this.id)
-                .content(this.content)
-                .title(this.title)
-                .username(this.username)
-                .createdAt(this.getCreatedAt())
-                .build();
+    public void update(BoardDto requestDto){
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
     }
+
+//    @Builder//얘도 롬복,빌드 패턴을 사용하여 객체를 생성할 수 있으며 객체 생성 후 setter를 통한 접근을 제한 할수 있어서 불변형 객체를 만들 수 있다.>
+//    // 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 나타냄>객체들마다 들어가야할 인자가 각각 다를 때 유연하게 사용
+//    //public Board(String title, String username, String content){
+//    public Board(String title, String content, String username, LocalDateTime createdAt, Integer id){
+//  //      this.id = id;
+//        this.title = title;
+//        this.username = username;
+//        this.content = content;
+//  //      this.createdAt = createdAt;
+//    }
+//
+//    public BoardDto toDto() { //보드를 디티오로 바꿔서 반환해주는 메서드(자세한건 서비스에 기술되어있음)*
+//        return BoardDto.builder()
+//                .id(this.id)
+//                .content(this.content)
+//                .title(this.title)
+//                .username(this.username)
+//                .createdAt(this.getCreatedAt())
+//                .build();
+//    }
 
 
 

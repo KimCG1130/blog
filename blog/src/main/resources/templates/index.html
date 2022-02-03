@@ -28,22 +28,22 @@
                     for (let i = 0; i < response.length; i++) {
                         let boards = response[i];
                         let id = boards.id;
-                        let name = boards.name;
+                        let name = boards.username;
                         let title = boards.title;
-                        let contents = boards.contents;
-                        let createdAt = boards.created_at;
-                        addHTML(id, name, title, contents, createdAt);
+                        let contents = boards.content;
+                        let modifiedAt = boards.modifiedAt;
+                        addHTML(id, name, title, contents, modifiedAt);
                     }
                 }
             });
         }
 
         function postBoard() {
+
             let title = $('#title').val();
             let content = $('#content').val();
-            let username = $('#username').val();
 
-            let data = {title:title,content:content,username:username}
+            let data = {title:title,content:content}
 
 
             $.ajax({
@@ -60,25 +60,25 @@
         }
 
 
-        function addHTML(id, name, title, contents, createdAt) {
-            let tempHtml = makeMessage(id, name, title, contents, createdAt);
+        function addHTML(id, name, title, content, modifiedAt) {
+            let tempHtml = makeMessage(id, name, title, content, modifiedAt);
             $('#cards-box').append(tempHtml);
         }
 
-        function makeMessage(id, name, title, contents, createdAt) {
-            return `<a href="detail.html?id=${id}">
+        function makeMessage(id, name, title, content, modifiedAt) {
+            return `<a href="/detail/${id}">
                         <div class="card">
                             <div class="metadata">
                                <div id="${id}-name" class="name">
                                    ${name}
                                </div>
                                <div class="date">
-                                   ${createdAt}
+                                   ${modifiedAt}
                                </div>
                             </div>
                             <h2 class='title' id="${id}-title">"${title}"</h2>
-                            <div class="contents" id="${id}-contents" >
-                               ${contents}
+                            <div class="content" id="${id}-content" >
+                               ${content}
                             </div>
                          </a>
 
@@ -343,20 +343,18 @@
         </div>
         <h2>항해99 바다 위 대나무숲<br><br>
 
-            맘껏 외치세요 무야호!
+            로그인 한 사람만 글을 쓸 수 있습니다.
         </h2>
 
     </div>
     <div class="to-write">
+
+
         <div id="post-box" class="form-post">
             <div>
                 <div class="form-group">
                     <label for="title">제목</label>
                     <input id="title" class="form-control" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="username">작성자</label>
-                    <input id="username" class="form-control" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="content">내용을 적으세요.</label>

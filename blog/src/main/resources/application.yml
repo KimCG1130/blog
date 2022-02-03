@@ -3,12 +3,12 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/sparta?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    #url: jdbc:mysql://springboot-database.co1pd3ntey2p.ap-northeast-2.rds.amazonaws.com:3306/myselectshop
-    #username: admin
-    username: root
-    password: corud
-    #password: 1q2w3e4r
+    #url: jdbc:mysql://127.0.0.1:3306/sparta?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://springboot-database.co1pd3ntey2p.ap-northeast-2.rds.amazonaws.com:3306/myselectshop
+    username: admin
+    #username: root
+    #password: corud
+    password: 1q2w3e4r
 
 
 
